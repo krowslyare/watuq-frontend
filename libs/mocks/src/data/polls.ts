@@ -1,0 +1,61 @@
+import type { Poll } from '@avp/api-client';
+
+export const mockPolls: Poll[] = [
+  {
+    id: 'poll-001',
+    ecosystemId: 'eco-lima',
+    question: '¿Cuál debería ser la prioridad de inversión pública para el 2027?',
+    description:
+      'Encuesta ciudadana para definir el área prioritaria de inversión del próximo presupuesto participativo.',
+    type: 'single',
+    status: 'active',
+    options: [
+      { id: 'opt-001', label: 'Transporte público', voteCount: 145, weightedTotal: 312 },
+      { id: 'opt-002', label: 'Seguridad ciudadana', voteCount: 98, weightedTotal: 210 },
+      { id: 'opt-003', label: 'Salud pública', voteCount: 67, weightedTotal: 134 },
+      { id: 'opt-004', label: 'Educación', voteCount: 54, weightedTotal: 108 },
+    ],
+    hidePartialResults: false,
+    startDate: '2026-04-01T00:00:00Z',
+    endDate: '2026-05-15T23:59:59Z',
+    totalVotes: 364,
+    createdAt: '2026-03-25T10:00:00Z',
+  },
+  {
+    id: 'poll-002',
+    ecosystemId: 'eco-lima',
+    question: '¿Apoya la implementación de ciclovías en la Av. Universitaria?',
+    description: 'Votación para evaluar el apoyo ciudadano al proyecto de ciclovías.',
+    type: 'single',
+    status: 'closed',
+    options: [
+      { id: 'opt-005', label: 'Sí, totalmente', voteCount: 230, weightedTotal: 485 },
+      { id: 'opt-006', label: 'Solo en horarios restringidos', voteCount: 87, weightedTotal: 174 },
+      { id: 'opt-007', label: 'No, afecta el tráfico', voteCount: 45, weightedTotal: 90 },
+    ],
+    hidePartialResults: false,
+    startDate: '2026-02-01T00:00:00Z',
+    endDate: '2026-03-01T23:59:59Z',
+    totalVotes: 362,
+    createdAt: '2026-01-25T08:00:00Z',
+  },
+  {
+    id: 'poll-003',
+    ecosystemId: 'eco-lima',
+    question: '¿Qué tipo de eventos culturales desea ver en su distrito?',
+    description: 'Encuesta de selección múltiple para planificación cultural.',
+    type: 'multiple',
+    status: 'scheduled',
+    options: [
+      { id: 'opt-008', label: 'Ferias gastronómicas', voteCount: 0, weightedTotal: 0 },
+      { id: 'opt-009', label: 'Conciertos al aire libre', voteCount: 0, weightedTotal: 0 },
+      { id: 'opt-010', label: 'Exposiciones de arte', voteCount: 0, weightedTotal: 0 },
+      { id: 'opt-011', label: 'Talleres comunitarios', voteCount: 0, weightedTotal: 0 },
+    ],
+    hidePartialResults: true,
+    startDate: '2026-06-01T00:00:00Z',
+    endDate: '2026-06-30T23:59:59Z',
+    totalVotes: 0,
+    createdAt: '2026-05-01T10:00:00Z',
+  },
+];
