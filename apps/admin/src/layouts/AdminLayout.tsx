@@ -279,8 +279,14 @@ export function AdminLayout() {
 
         {/* Content Area */}
         <div className="flex-1 p-6 md:p-8 overflow-y-auto relative z-0">
-          <div className="max-w-7xl mx-auto">
-            <Outlet />
+          <div className="max-w-7xl mx-auto h-full">
+            <React.Suspense fallback={
+              <div className="w-full h-full flex items-center justify-center">
+                <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+              </div>
+            }>
+              <Outlet />
+            </React.Suspense>
           </div>
         </div>
       </main>
