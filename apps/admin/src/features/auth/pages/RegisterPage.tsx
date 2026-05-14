@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
-import { Button } from '@avp/ui';
-import { Input } from '@avp/ui';
+import { Button, Input, DotField } from '@avp/ui';
 import { UserPlus, AlertCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -33,20 +32,37 @@ export function RegisterPage() {
   return (
     <div className="min-h-screen flex">
       {/* Left Panel — Branding */}
-      <div className="hidden lg:flex lg:w-1/2 bg-primary items-center justify-center p-12">
-        <div className="max-w-md text-white">
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
-              <span className="text-2xl font-bold">AVP</span>
+      <div className="hidden lg:flex lg:w-1/2 relative bg-slate-900 overflow-hidden">
+        {/* Animated Background */}
+        <div className="absolute inset-0 z-0">
+          <DotField
+            dotRadius={1.5}
+            dotSpacing={14}
+            cursorRadius={500}
+            cursorForce={0.1}
+            bulgeOnly={true}
+            bulgeStrength={67}
+            gradientFrom="rgba(16, 185, 129, 0.35)"
+            gradientTo="rgba(34, 197, 94, 0.25)"
+            glowColor="#0f172a"
+            className="w-full h-full"
+          />
+        </div>
+
+        {/* Foreground Content */}
+        <div className="relative z-10 w-full h-full flex flex-col items-center justify-center p-12 pointer-events-none">
+          <div className="max-w-md text-white">
+            <div className="flex items-center gap-3 mb-8">
+              <span className="text-3xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-green-400">WATUQ</span>
             </div>
+            <h1 className="text-4xl font-bold mb-4 leading-tight">
+              Únase a la plataforma
+            </h1>
+            <p className="text-lg text-white/70 leading-relaxed font-light">
+              Participe activamente en la gobernanza de su ecosistema.
+              Monitoree indicadores, vote en encuestas y contribuya en foros de discusión.
+            </p>
           </div>
-          <h1 className="text-4xl font-bold mb-4">
-            Únase a la plataforma
-          </h1>
-          <p className="text-lg text-white/80">
-            Participe activamente en la gobernanza de su ecosistema.
-            Monitoree indicadores, vote en encuestas y contribuya en foros de discusión.
-          </p>
         </div>
       </div>
 
