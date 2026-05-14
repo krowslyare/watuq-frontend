@@ -46,6 +46,7 @@ export default function PollsPage() {
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [expandedPoll, setExpandedPoll] = useState<string | null>(null);
+  const [showCreateModal, setShowCreateModal] = useState(false);
 
   const filtered = mockPolls
     .filter((p) => p.question.toLowerCase().includes(search.toLowerCase()))
@@ -67,7 +68,7 @@ export default function PollsPage() {
           <h1 className="text-2xl font-bold text-text">Votaciones</h1>
           <p className="text-text-muted text-sm">Encuestas y votaciones ponderadas.</p>
         </div>
-        <Button>
+        <Button onClick={() => setShowCreateModal(true)}>
           <Plus className="w-4 h-4 mr-2" />
           Nueva Votación
         </Button>
@@ -233,6 +234,68 @@ export default function PollsPage() {
         <div className="text-center py-12 bg-surface rounded-lg border border-border">
           <Vote className="w-10 h-10 text-text-muted mx-auto mb-3" />
           <p className="text-sm text-text-muted">No se encontraron votaciones.</p>
+        </div>
+      )}
+
+      {/* Create Modal */}
+      {showCreateModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-surface rounded-lg border border-border shadow-lg w-full max-w-lg mx-4 p-6 max-h-[90vh] overflow-y-auto"
+          >
+            <h2 className="text-lg font-semibold text-text mb-4">Nueva Votación</h2>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-text">Pregunta</label>
+                <Input placeholder="Ej: ¿Cuál debería ser la prioridad presupuestal 2027?" />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-text">Descripción</label>
+                <textarea
+                  className="flex w-full rounded-md border border-border bg-surface px-3 py-2 text-sm placeholder:text-text-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary min-h-[80px]"
+                  placeholder="Contexto y detalles de la votación..."
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-text">Tipo</label>
+                  <select className="flex h-10 w-full rounded-md border border-border bg-surface px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+                    <option value="single">Selección Única</option>
+                    <option value="multiple">Selección Múltiple</option>
+                  </select>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-text">Escala de Votación</label>
+                  <select className="flex h-10 w-full rounded-md border border-border bg-surface px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+                    <option value="default">Estándar</option>
+                    <option value="ponderada">Ponderada</option>
+                  </select>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-text">Fecha de Inicio</label>
+                  <Input type="date" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-text">Fecha de Cierre</label>
+                  <Input type="date" />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-text">Opciones de Respuesta</label>
+                <Input placeholder="Opción 1" className="mb-2" />
+                <Input placeholder="Opción 2" className="mb-2" />
+                <Input placeholder="Opción 3 (opcional)" />
+              </div>
+            </div>
+            <div className="flex justify-end gap-3 mt-6 pt-4 border-t border-border">
+              <Button variant="outline" onClick={() => setShowCreateModal(false)}>Cancelar</Button>
+              <Button onClick={() => setShowCreateModal(false)}>Crear Votación</Button>
+            </div>
+          </motion.div>
         </div>
       )}
     </motion.div>

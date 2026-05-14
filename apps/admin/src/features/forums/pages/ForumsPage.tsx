@@ -147,6 +147,7 @@ export default function ForumsPage() {
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [selectedTopic, setSelectedTopic] = useState<ForumTopic | null>(null);
+  const [showCreateModal, setShowCreateModal] = useState(false);
 
   const filtered = mockForumTopics
     .filter((t) => t.title.toLowerCase().includes(search.toLowerCase()))
@@ -173,7 +174,7 @@ export default function ForumsPage() {
           </h1>
           <p className="text-text-muted font-medium">Espacios de discusión y participación ciudadana.</p>
         </div>
-        <Button className="hover-lift shadow-md bg-primary hover:bg-primary/90 text-white">
+        <Button onClick={() => setShowCreateModal(true)} className="hover-lift shadow-md bg-primary hover:bg-primary/90 text-white">
           <Plus className="w-5 h-5 mr-2" />
           Nuevo Tema
         </Button>
@@ -274,6 +275,54 @@ export default function ForumsPage() {
         <div className="text-center py-16 glass-panel rounded-2xl relative z-10">
           <MessageSquare className="w-12 h-12 text-text-muted/40 mx-auto mb-4" />
           <p className="text-sm font-medium text-text-muted">No se encontraron temas.</p>
+        </div>
+      )}
+
+      {/* Create Modal */}
+      {showCreateModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-surface rounded-lg border border-border shadow-lg w-full max-w-lg mx-4 p-6 max-h-[90vh] overflow-y-auto"
+          >
+            <h2 className="text-lg font-semibold text-text mb-4">Nuevo Tema de Foro</h2>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-text">Título</label>
+                <Input placeholder="Ej: Propuesta de mejora del transporte público" />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-text">Descripción</label>
+                <textarea
+                  className="flex w-full rounded-md border border-border bg-surface px-3 py-2 text-sm placeholder:text-text-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary min-h-[100px]"
+                  placeholder="Describa el tema de discusión..."
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-text">Categoría</label>
+                  <select className="flex h-10 w-full rounded-md border border-border bg-surface px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+                    <option value="general">General</option>
+                    <option value="propuestas">Propuestas</option>
+                    <option value="consultas">Consultas</option>
+                    <option value="incidencias">Incidencias</option>
+                  </select>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-text">Estado Inicial</label>
+                  <select className="flex h-10 w-full rounded-md border border-border bg-surface px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+                    <option value="open">Abierto</option>
+                    <option value="closed">Cerrado</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-end gap-3 mt-6 pt-4 border-t border-border">
+              <Button variant="outline" onClick={() => setShowCreateModal(false)}>Cancelar</Button>
+              <Button onClick={() => setShowCreateModal(false)}>Crear Tema</Button>
+            </div>
+          </motion.div>
         </div>
       )}
     </motion.div>

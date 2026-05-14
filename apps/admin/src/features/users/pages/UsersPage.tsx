@@ -37,6 +37,7 @@ export default function UsersPage() {
   const [users] = useState<User[]>(mockUsers);
   const [search, setSearch] = useState('');
   const [roleFilter, setRoleFilter] = useState<string>('all');
+  const [showCreateModal, setShowCreateModal] = useState(false);
 
   const filtered = users
     .filter((u) =>
@@ -59,7 +60,7 @@ export default function UsersPage() {
             Gestione usuarios, roles y jerarquías de votación.
           </p>
         </div>
-        <Button>
+        <Button onClick={() => setShowCreateModal(true)}>
           <Plus className="w-4 h-4 mr-2" />
           Agregar Usuario
         </Button>
@@ -195,6 +196,73 @@ export default function UsersPage() {
           </div>
         )}
       </motion.div>
+
+      {/* Create Modal */}
+      {showCreateModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-surface rounded-lg border border-border shadow-lg w-full max-w-lg mx-4 p-6 max-h-[90vh] overflow-y-auto"
+          >
+            <h2 className="text-lg font-semibold text-text mb-4">Agregar Usuario</h2>
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-text">Nombres</label>
+                  <Input placeholder="Carlos" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-text">Apellidos</label>
+                  <Input placeholder="Mendoza" />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-text">Correo Electrónico</label>
+                <Input type="email" placeholder="usuario@ejemplo.com" />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-text">Contraseña</label>
+                <Input type="password" placeholder="Mínimo 8 caracteres" />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-text">Rol</label>
+                  <select className="flex h-10 w-full rounded-md border border-border bg-surface px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+                    <option value="REGISTERED">Registrado</option>
+                    <option value="EDITOR">Editor</option>
+                    <option value="SECRETARY">Secretario</option>
+                    <option value="SUPER_ADMIN">Super Admin</option>
+                  </select>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-text">Ecosistema</label>
+                  <select className="flex h-10 w-full rounded-md border border-border bg-surface px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+                    <option value="">Sin asignar</option>
+                    {mockEcosystems.map((eco) => (
+                      <option key={eco.id} value={eco.id}>{eco.name}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-text">Nivel de Jerarquía</label>
+                <select className="flex h-10 w-full rounded-md border border-border bg-surface px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+                  <option value="1">1 — Básico</option>
+                  <option value="2">2 — Intermedio</option>
+                  <option value="3">3 — Avanzado</option>
+                  <option value="4">4 — Senior</option>
+                  <option value="5">5 — Máximo</option>
+                </select>
+              </div>
+            </div>
+            <div className="flex justify-end gap-3 mt-6 pt-4 border-t border-border">
+              <Button variant="outline" onClick={() => setShowCreateModal(false)}>Cancelar</Button>
+              <Button onClick={() => setShowCreateModal(false)}>Crear Usuario</Button>
+            </div>
+          </motion.div>
+        </div>
+      )}
     </motion.div>
   );
 }

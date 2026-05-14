@@ -82,6 +82,7 @@ const fadeUp = {
 export default function ContentPage() {
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [showCreateModal, setShowCreateModal] = useState(false);
   const navigate = useNavigate();
 
   const filtered = mockContentPages
@@ -100,7 +101,7 @@ export default function ContentPage() {
             Gestione las páginas y documentos del ecosistema.
           </p>
         </div>
-        <Button className="hover-lift shadow-md bg-primary hover:bg-primary/90 text-white">
+        <Button onClick={() => setShowCreateModal(true)} className="hover-lift shadow-md bg-primary hover:bg-primary/90 text-white">
           <Plus className="w-5 h-5 mr-2" />
           Nueva Página
         </Button>
@@ -218,6 +219,57 @@ export default function ContentPage() {
         <div className="text-center py-16 glass-panel rounded-2xl relative z-10">
           <FileText className="w-12 h-12 text-text-muted/40 mx-auto mb-4" />
           <p className="text-sm font-medium text-text-muted">No se encontraron páginas.</p>
+        </div>
+      )}
+
+      {/* Create Modal */}
+      {showCreateModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-surface rounded-lg border border-border shadow-lg w-full max-w-lg mx-4 p-6 max-h-[90vh] overflow-y-auto"
+          >
+            <h2 className="text-lg font-semibold text-text mb-4">Nueva Página</h2>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-text">Título</label>
+                <Input placeholder="Ej: Plan Estratégico de Desarrollo 2026" />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-text">Slug</label>
+                <Input placeholder="plan-estrategico-desarrollo" />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-text">Extracto</label>
+                <textarea
+                  className="flex w-full rounded-md border border-border bg-surface px-3 py-2 text-sm placeholder:text-text-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary min-h-[80px]"
+                  placeholder="Resumen breve de la página..."
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-text">Ecosistema</label>
+                  <select className="flex h-10 w-full rounded-md border border-border bg-surface px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+                    {mockEcosystems.map((eco) => (
+                      <option key={eco.id} value={eco.id}>{eco.name}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-text">Estado</label>
+                  <select className="flex h-10 w-full rounded-md border border-border bg-surface px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+                    <option value="draft">Borrador</option>
+                    <option value="published">Publicado</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-end gap-3 mt-6 pt-4 border-t border-border">
+              <Button variant="outline" onClick={() => setShowCreateModal(false)}>Cancelar</Button>
+              <Button onClick={() => setShowCreateModal(false)}>Crear Página</Button>
+            </div>
+          </motion.div>
         </div>
       )}
     </motion.div>
